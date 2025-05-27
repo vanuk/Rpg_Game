@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b1b9ade4d0ce94794921c8b47ec5f8, type: 3}
+  m_Name: Flask_blue
+  m_EditorClassIdentifier: 
+  itemName: speed
+  icon: {fileID: 1981572882, guid: dec4877092a89de4e8f1cedaa838f87f, type: 3}
+  itemType: 0
+  prefab: {fileID: 434299282669038076, guid: 81009e536302aaa45b6eef36b6ce98cf, type: 3}
+  description: "\u043F\u0440\u043E\u043F\u0440 \u043E\u043E\u043F\u0440 \u043E\u043F\u0440
+    \u043E\u043F\u0440"
+  maxStack: 10

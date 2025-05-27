@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PickUpItem : MonoBehaviour
 {
-    public ItemData itemData; // Признач у інспекторі
+    public ItemData itemData;
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -12,7 +12,7 @@ public class PickUpItem : MonoBehaviour
             if (inv != null && itemData != null)
             {
                 inv.AddItem(itemData);
-                Destroy(gameObject); // Видаляємо предмет зі сцени
+                Destroy(gameObject);
             }
         }
     }

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b1b9ade4d0ce94794921c8b47ec5f8, type: 3}
+  m_Name: Flask
+  m_EditorClassIdentifier: 
+  itemName: Flaks
+  icon: {fileID: 21300000, guid: bb5e44a7ba4a1e84681834f0e794265e, type: 3}
+  itemType: 0
+  prefab: {fileID: 4972630985655548943, guid: 9246c2b6e6d57164e8326f48eb1f0396, type: 3}
+  description: "\u0417\u0456\u043B\u043B\u044F \u0434\u043B\u044F \u0432\u0456\u0434\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u044F
+    \u0436\u0438\u0442\u0442\u044F \u0456 \u0448\u0432\u0438\u0434\u043A\u043E\u0441\u0442\u0456
+    \u043C\u0430\u0431\u0443\u0442\u044C ........\u0432\u0456\u0430.\u0456\u0432\u0430.\u0456\u0432.\u0430.\u0456\u0432.\u0430.\u0447\u0441\u043C\u0447\u0441\u043C\u0447\u0441\u043C"
+  maxStack: 10
