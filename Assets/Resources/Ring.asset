@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0b1b9ade4d0ce94794921c8b47ec5f8, type: 3}
-  m_Name: Flask_blue
+  m_Name: Ring
   m_EditorClassIdentifier: 
-  itemName: speed
-  description: 'this flaks add speed maybe..
+  itemName: Ring
+  description: 'This ring is magic
 
-    +30 sp'
-  icon: {fileID: 1981572882, guid: dec4877092a89de4e8f1cedaa838f87f, type: 3}
-  isStackable: 0
-  prefab: {fileID: 434299282669038076, guid: 81009e536302aaa45b6eef36b6ce98cf, type: 3}
-  equipmentType: 0
-  itemType: 0
+    +30 speed'
+  icon: {fileID: 21300000, guid: 6796a6f46a3f1784cba895e84b655888, type: 3}
+  isStackable: 1
+  prefab: {fileID: 0}
+  equipmentType: 4
+  itemType: 4
   maxStack: 10
+  uniqueID: d4de2fe0-bd03-4d73-9aef-cc0ab399e5ad

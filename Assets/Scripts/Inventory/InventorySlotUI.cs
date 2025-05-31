@@ -13,52 +13,53 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     // Для підсвічування вибраного слота та виводу опису
     public static InventorySlotUI lastSelectedSlot;
     public Text descriptionText; // Признач у інспекторі або з коду
-    
+
     void Start()
     {
         canvas = GetComponentInParent<Canvas>();
     }
-    
-    public void OnPointerClick(PointerEventData eventData)
-{
-    // Повертаємо попередній слот до нормального кольору
-    if (lastSelectedSlot != null && lastSelectedSlot != this)
-    {
-        var prevIcon = lastSelectedSlot.transform.Find("Icon")?.GetComponent<Image>();
-        if (prevIcon != null)
-        {
-            var prevColor = prevIcon.color;
-            prevColor.a = 1f;
-            prevIcon.color = prevColor;
-        }
-    }
 
-    var slot = inventorySystem.GetSlot(slotIndex);
-    if (slot != null && slot.item != null)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        Transform iconTransform = transform.Find("Icon");
-        if (iconTransform != null)
+        // Повертаємо попередній слот до нормального кольору
+        if (lastSelectedSlot != null && lastSelectedSlot != this)
         {
-            Image iconImage = iconTransform.GetComponent<Image>();
-            if (iconImage != null)
+            var prevIcon = lastSelectedSlot.transform.Find("Icon")?.GetComponent<Image>();
+            if (prevIcon != null)
             {
-                var color = iconImage.color;
-                color.a = 0.5f; // Мутний
-                iconImage.color = color;
+                var prevColor = prevIcon.color;
+                prevColor.a = 1f;
+                prevIcon.color = prevColor;
             }
         }
-        Debug.Log(slot.item.description);
-        if (descriptionText != null)
-            descriptionText.text = slot.item.description;
-    }
-    else
-    {
-        if (descriptionText != null)
-            descriptionText.text = "";
-    }
 
-    lastSelectedSlot = this;
-}
+        var slot = inventorySystem.GetSlot(slotIndex);
+        if (slot != null && slot.item != null)
+        {
+            Transform iconTransform = transform.Find("Icon");
+            if (iconTransform != null)
+            {
+                Image iconImage = iconTransform.GetComponent<Image>();
+                if (iconImage != null)
+                {
+                    var color = iconImage.color;
+                    color.a = 0.5f; // Мутний
+                    iconImage.color = color;
+                }
+            }
+            // Вивести опис у консоль
+            Debug.Log(slot.item.description);
+            if (descriptionText != null)
+                descriptionText.text = slot.item.description;
+        }
+        else
+        {
+            if (descriptionText != null)
+                descriptionText.text = "";
+        }
+
+        lastSelectedSlot = this;
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -105,6 +106,14 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             // Якщо dragIcon не було — drag не починався, нічого не робимо!
             return;
         }
+
+        // Перевіряємо, чи дроп був на корзину
+        if (eventData.pointerEnter != null && eventData.pointerEnter.GetComponent<Trash>() != null)
+        {
+            // Дроп на корзину, нічого не робимо
+            return;
+        }
+
         // Перевіряємо, чи дроп був не на слот
         if (eventData.pointerEnter == null || eventData.pointerEnter.GetComponent<InventorySlotUI>() == null)
         {
@@ -150,8 +159,37 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             var slotData = inventorySystem.GetSlot(draggedSlot.slotIndex);
             if (slotData == null || slotData.item == null) return;
-
             inventorySystem.SwapSlots(draggedSlot.slotIndex, slotIndex);
         }
+        // --- Додаємо drop з EquipmentSlotUI ---
+        var draggedEquip = eventData.pointerDrag?.GetComponent<EquipmentSlotUI>();
+        if (draggedEquip != null && inventorySystem != null)
+        {
+            var slot = inventorySystem.GetSlot(slotIndex);
+            var equipIcon = draggedEquip.iconImage;
+            var equipItem = GetEquippedItemFromEquipmentSlotUI(draggedEquip);
+            if (slot != null && slot.item == null && equipItem != null)
+            {
+                // Додаємо предмет у цей слот
+                slot.item = equipItem;
+                slot.count = 1;
+                // Очищаємо EquipmentSlotUI
+                equipIcon.sprite = inventorySystem.inventoryUI.emptySlotSprite;
+                SetEquippedItemInEquipmentSlotUI(draggedEquip, null);
+                inventorySystem.inventoryUI.Refresh(inventorySystem._inventorySlots);
+            }
+        }
+    }
+
+    // Допоміжні методи для доступу до equippedItem у EquipmentSlotUI
+    private ItemData GetEquippedItemFromEquipmentSlotUI(EquipmentSlotUI equipSlot)
+    {
+        var field = typeof(EquipmentSlotUI).GetField("equippedItem", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        return field != null ? (ItemData)field.GetValue(equipSlot) : null;
+    }
+    private void SetEquippedItemInEquipmentSlotUI(EquipmentSlotUI equipSlot, ItemData item)
+    {
+        var field = typeof(EquipmentSlotUI).GetField("equippedItem", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        if (field != null) field.SetValue(equipSlot, item);
     }
 }
